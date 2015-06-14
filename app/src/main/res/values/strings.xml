@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SCTID</string>
+    <string name="input_name">學生證卡號對學號</string>
+    <string name="label_subtype_generic">%s</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+</resources>
