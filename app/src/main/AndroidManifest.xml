@@ -17,17 +17,37 @@
             </intent-filter>
         </activity>
 
-        <service android:name="me.pastleo.sctid.SctidIMEService"
+        <service
+            android:name=".SctidIMEService"
             android:label="@string/input_name"
-            android:permission="android.permission.BIND_INPUT_METHOD"
-            >
-            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
+            android:permission="android.permission.BIND_INPUT_METHOD" >
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".SCRecieverActivity"
+            android:label="@string/title_activity_screciever"
+            android:theme="@style/Theme.Transparent" >
+        </activity>
     </application>
 
+    <!-- Permission for using NFC hardware -->
+    <uses-permission android:name="android.permission.NFC"/>
+    <!-- Forcing device to have NFC hardware -->
+    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
+    <!-- Registering app for receiving NFC's TAG_DISCOVERED intent -->
+    <intent-filter>
+        <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+    </intent-filter>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

@@ -6,36 +6,70 @@
     android:layout_alignParentBottom="true"
     android:background="#FFF">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="SCTID Msg"
-        android:id="@+id/msg"
-        android:layout_gravity="center_horizontal"
-        android:textSize="20dp" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal">
 
-        <ToggleButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New ToggleButton"
+            android:text="Scan"
             android:id="@+id/scan"
-            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/clear"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="輸入"
+            android:text="Enter"
             android:id="@+id/enter"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:id="@+id/clear"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/enter"
+            android:layout_toStartOf="@+id/enter" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="SCTID Status"
+        android:id="@+id/msg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:id="@+id/settings"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Switch Input Method"
+            android:id="@+id/swi"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/settings"
+            android:layout_toStartOf="@+id/settings" />
     </RelativeLayout>
 
 </LinearLayout>
