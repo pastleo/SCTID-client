@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">SCTID</string>
-    <string name="input_name">學生證卡號對學號</string>
+    <string name="app_name">SCTID 卡號轉學號</string>
+    <string name="input_name">SCTID 卡號轉學號</string>
     <string name="label_subtype_generic">%s</string>
     <string name="got_sid">Student ID got:</string>
     <string name="got_sid_hint">讀取並轉換成功，請再按下原本輸入框叫出輸入法輸入學號</string>
+    <string name="change_base_url">Change Server URL</string>
 
     <string name="action_pending">Please wait ...</string>
     <string name="action_settings">Settings</string>
@@ -14,7 +15,9 @@
     <string name="share_settings_msg">SCTID_MSG</string>
     <string name="share_settings_status">SCTID_STATUS</string>
 
-    <string name="server_base_url">http://dev.pastleo.me</string>
+    <string name="share_settings_server_base_url">SCTID_BASE_URL</string>
+
+    <string name="default_server_base_url">http://dev.pastleo.me</string>
     <!--<string name="server_base_url">http://www.google.com</string>-->
     <string name="login_uri">/login</string>
     <string name="logout_uri">/logout</string>

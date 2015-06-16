@@ -36,11 +36,11 @@ public class SctidIMEService extends InputMethodService implements View.OnClickL
         return v;
     }
 
-//    @Override
-//    public void onStartInputView (EditorInfo info, boolean restarting) {
-//        super.onStartInputView(info,restarting);
-//        receive();
-//    }
+    @Override
+    public void onStartInputView (EditorInfo info, boolean restarting) {
+        super.onStartInputView(info,restarting);
+        receive();
+    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {

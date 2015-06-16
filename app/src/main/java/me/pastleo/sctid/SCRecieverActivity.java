@@ -117,7 +117,11 @@ public class SCRecieverActivity extends Activity implements View.OnClickListener
             try {
                 String card_id = Helper.ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
                 GOT_INTENT = true;
-                String url = getResources().getString(R.string.server_base_url) + getResources().getString(R.string.get_uri);
+
+                String share_settings_server_base_url = getResources().getString(R.string.share_settings_server_base_url);
+                String url =  settings.getString(share_settings_server_base_url, getResources().getString(R.string.default_server_base_url));
+                url += getResources().getString(R.string.get_uri);
+
                 HashMap<String, String> params = new HashMap<>();
                 params.put("card_id", card_id);
                 CookieJsonObjectRequest.getRequestQueue(null,this).add(
@@ -129,6 +133,12 @@ public class SCRecieverActivity extends Activity implements View.OnClickListener
                 onError("onNewIntent",e);
             }
         }
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        finish();
     }
 
     @Override

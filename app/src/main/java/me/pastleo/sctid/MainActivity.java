@@ -1,5 +1,7 @@
 package me.pastleo.sctid;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
@@ -10,6 +12,7 @@ import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener,Response.Listener<JSONObject>,Response.ErrorListener {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener,Response.Listener<JSONObject>,Response.ErrorListener,DialogInterface.OnClickListener {
     private final String[][] techList = new String[][] { new String[] {
             NfcA.class.getName(), NfcB.class.getName(), NfcF.class.getName(),
             NfcV.class.getName(), IsoDep.class.getName(),
@@ -73,6 +76,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         findViewById(R.id.login).setOnClickListener(this);
         findViewById(R.id.logout).setOnClickListener(this);
         findViewById(R.id.register).setOnClickListener(this);
+        findViewById(R.id.nfc_settings).setOnClickListener(this);
+        findViewById(R.id.change_server).setOnClickListener(this);
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -105,6 +110,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onStop(){
+        super.onStop();
+        finish();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
             String cid = Helper.ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID));
@@ -122,11 +133,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private int HttpState = 0;
     RequestQueue rq;
 
+    private EditText baseUrlChanger;
+
     @Override
     public void onClick(View view) {
         if(HttpState != HTTP_STATE_READY) return;
 
-        String url = getResources().getString(R.string.server_base_url);
+        String share_settings_server_base_url = getResources().getString(R.string.share_settings_server_base_url);
+        String url =  settings.getString(share_settings_server_base_url, getResources().getString(R.string.default_server_base_url));
+
         HashMap<String, String> params;
         CookieJsonObjectRequest req;
         rq = CookieJsonObjectRequest.getRequestQueue(rq,this);
@@ -155,6 +170,20 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     rq.add(req);
                     HttpState = HTTP_STATE_REGISTER;
                     break;
+                case R.id.change_server:
+                    AlertDialog.Builder editDialog = new AlertDialog.Builder(this);
+                    editDialog.setTitle(getResources().getString(R.string.change_base_url));
+
+                    baseUrlChanger = new EditText(this);
+                    baseUrlChanger.setText(url);
+                    editDialog.setView(baseUrlChanger);
+
+                    editDialog.setPositiveButton("OK", this);
+                    editDialog.show();
+                    return;
+                case R.id.nfc_settings:
+                    startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                    return;
             }
 
             result.setText(getResources().getString(R.string.action_pending));
@@ -200,5 +229,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         result.setTextColor(FAIL_COLOR);
 
         HttpState = HTTP_STATE_READY;
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        SharedPreferences.Editor editor = settings.edit();
+        String changed = baseUrlChanger != null ? baseUrlChanger.getText().toString() : getResources().getString(R.string.default_server_base_url);
+        editor.putString(
+                getResources().getString(R.string.share_settings_server_base_url),
+                changed
+        );
+        editor.commit();
     }
 }
